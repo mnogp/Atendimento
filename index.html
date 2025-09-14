@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual de Atendimento</title>
@@ -144,5 +145,16 @@
         // Inicializar o menu
         populateMenu();
     </script>
+    if (typeof window.netlifyIdentity !== 'undefined') {
+    netlifyIdentity.init({
+        container: '#netlify-identity-widget' // Opcional: para widget de login
+    });
+    netlifyIdentity.on('init', user => {
+        if (!user) {
+            // Se não logado, redirecione para login ou esconda conteúdo
+            document.body.innerHTML = '<h1>Acesso Restrito</h1><p>Faça login para acessar o manual.</p><button onclick="netlifyIdentity.open()">Entrar</button>';
+        }
+    });
+}
 </body>
 </html>
