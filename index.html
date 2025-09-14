@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Atendimento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            position: fixed;
+            height: 100%;
+        }
+        .sidebar h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar li {
+            margin: 10px 0;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #34495e;
+        }
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
+        }
+        .content h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .content pre {
+            white-space: pre-wrap;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+            }
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+        /* Suporte a tema escuro */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #e0e0e0;
+            }
+            .content pre {
+                background-color: #2c2c2c;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Manual de Atendimento</h2>
+        <ul id="menu"></ul>
+    </div>
+    <div class="content">
+        <h1 id="section-title">Selecione um tópico</h1>
+        <pre id="section-content">Clique em um tópico no menu à esquerda para visualizar o conteúdo.</pre>
+    </div>
+
+    <script>
+        const manualSections = {
+            1: {
+                title: "OBJETIVO",
+                content: `Estabelecer padrões claros de comunicação e atendimento para garantir a excelência no relacionamento com clientes e entregadores, aumentando a fidelização e evitando cancelamentos.`
+            },
+            2: {
+                title: "Canais de Atendimento",
+                content: `- Chat (iFood)\n- Ligação telefônica (Cliente)\n- WhatsApp oficial da loja (Cliente)\n- Suporte a entregadores (Mensagens do Whatsapp dos Entregadores)`
+            },
+            3: {
+                title: "PRINCÍPIOS GERAIS DE ATENDIMENTO",
+                content: `- Agilidade e objetividade\n- Empatia e cordialidade\n- Resolução no primeiro contato sempre que possível\n- Uso de linguagem clara, gentil e sem jargões`
+            },
+            4: {
+                title: "ATENDIMENTO VIA CHAT (iFood ou App)",
+                content: `### ➤ Boas Práticas\n\n- Inicie com uma saudação personalizada:\n\n“Olá, [bom dia, boa tarde, boa noite]! Tudo bem? Em que podemos te ajudar?”\n\n- Sempre leia ou escute a solicitação com atenção e confirme o que entendeu:\n\n“Entendi que você gostaria de alterar seu endereço, certo?”\n\n- Evite mensagens secas ou genéricas. Use tom humanizado e empático.\n\n### ➤ Modelos de resposta\n\n**Reenvio de item faltante:**\n\n“Pedimos desculpas por isso! Podemos enviar o item agora mesmo com prioridade. Pode confirmar o endereço?”\n\n**Pedido atrasado:**\n\n- Saiu para entrega:\n\n“Seu pedido já está a caminho! Entendemos sua preocupação e vamos entrar em contato com o(a) entregador(a) para localizar seu pedido. Agradecemos a paciência!”\n\n- Ainda em preparo:\n\n“Estamos com uma alta demanda hoje e verificamos que seu pedido será um dos próximos a sair para entrega, solicitamos prioridade na rota. Pedimos desculpas por esse atraso, iremos analisar todo ocorrido para que experiências assim não voltem a se repetir.”`
+            },
+            5: {
+                title: "PROTOCOLOS IMPORTANTES - Tratamento de Solicitações de Clientes no iFood",
+                content: `Durante a operação de atendimento, o iFood pode enviar solicitações de clientes que exigem resposta rápida. Essas solicitações têm prazo limitado, com contagem regressiva para resposta. Caso **não** sejam respondidas dentro do tempo estipulado, o pedido será automaticamente cancelado.\n\n#### Tipos de Solicitações Comuns:\n\n- Pedido incorreto ou incompleto\n- Atraso na entrega\n- Qualidade do pedido (ex: comida fria ou danificada)\n\n#### Procedimento para Resposta:\n\n1. Monitore constantemente as notificações no gestor de pedidos para garantir que todas as solicitações sejam visualizadas imediatamente.\n2. Responda de forma clara e rápida, oferecendo soluções eficazes como reenvio de itens, descontos ou esclarecimento de dúvidas.\n3. Não deixe de responder dentro do prazo, evitando o cancelamento automático do pedido e a insatisfação do cliente.\n\n#### Importância de Responder Rapidamente:\n\n- Evitar cancelamento do pedido e perda de vendas.\n- Preservar a satisfação do cliente, mesmo em casos de erro ou problema.\n- Evitar impacto na reputação do restaurante na plataforma.`
+            },
+            // Adicione outras seções aqui conforme necessário
+            // Para manter o exemplo conciso, incluí apenas algumas seções. Você pode adicionar as demais conforme o modelo acima.
+        };
+
+        function populateMenu() {
+            const menu = document.getElementById('menu');
+            for (const key in manualSections) {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#';
+                a.textContent = manualSections[key].title;
+                a.onclick = () => displaySection(key);
+                li.appendChild(a);
+                menu.appendChild(li);
+            }
+        }
+
+        function displaySection(key) {
+            const title = document.getElementById('section-title');
+            const content = document.getElementById('section-content');
+            title.textContent = manualSections[key].title;
+            content.textContent = manualSections[key].content;
+            // Atualizar estilo do menu ativo
+            document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Inicializar o menu
+        populateMenu();
+    </script>
+</body>
+</html>
